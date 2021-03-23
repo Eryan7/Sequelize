@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" class="has-background-info">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -8,18 +8,29 @@
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
     />
     <link href="styles.css" rel="stylesheet" />
-    <title>Emmet Ryan's Dining Hall Tracker</title>
+    <title>Emmet Ryan's Dining Hall Lab</title>
   </head>
-  <body>
-    <h1>Emmet Ryan's Dining Hall Tracker</h1>
-    <table class="table is-bordered is-striped">
-        <thread>
-            <th>Hall ID</th>
-            <th>Hall Name</th>
-            <th>Hall Address</th>
-        </thread>
-        <tbody></tbody>
-    </table>
+  <body class="has-background-info">
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <h1 class="subtitle mt-3 ml-3 has-text-white">Emmet Ryan's Dining Hall Lab</h1>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    </nav>
+    <div class="box has-background-grey-lighter mt-3">
+      <table class="table is-bordered is-striped is-fullwidth">
+          <thread>
+              <th>Hall ID</th>
+              <th>Hall Name</th>
+              <th>Hall Address</th>
+          </thread>
+          <tbody></tbody>
+      </table>
+    </div>
   </body>
   <script src="script.js"></script>
 </html>
