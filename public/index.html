@@ -13,24 +13,37 @@
   <body class="has-background-info">
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <h1 class="subtitle mt-3 ml-3 has-text-white">Emmet Ryan's Dining Hall Lab</h1>
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <h1 class="subtitle mt-3 ml-3 has-text-white">
+          Emmet Ryan's Dining Hall Lab
+        </h1>
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+        >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </a>
       </div>
     </nav>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
     <div class="box has-background-grey-lighter mt-3">
       <table class="table is-bordered is-striped is-fullwidth">
-          <thread>
-              <th>Hall ID</th>
-              <th>Hall Name</th>
-              <th>Hall Address</th>
-          </thread>
-          <tbody></tbody>
+        <thread>
+          <th>Hall ID</th>
+          <th>Hall Name</th>
+          <th>Hall Address</th>
+        </thread>
+        <tbody></tbody>
       </table>
     </div>
   </body>
   <script src="script.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"
+    integrity="sha512-FJ2OYvUIXUqCcPf1stu+oTBlhn54W0UisZB/TNrZaVMHHhYvLBV9jMbvJYtvDe5x/WVaoXZ6KB+Uqe5hT2vlyA=="
+    crossorigin="anonymous"
+  ></script>
 </html>
