@@ -1,3 +1,11 @@
+const caloriesData = [];
+const servingData = [];
+const cholData = [];
+const sodiumData = [];
+const carbsData = [];
+const proteinData = [];
+const fatData = [];
+
 async function windowActions() {
   const diningRequest = await fetch('/api/dining');
   const hallData = await diningRequest.json();
@@ -12,21 +20,26 @@ async function windowActions() {
     tableBody.append(tableLine);
   });
 
-  const macrosRequest = await fetch('api/macros');
-  const mealsRequest = await fetch('api/meals');
+  const macrosRequest = await fetch('api/mealmacros');
   const macrosData = await macrosRequest.json();
-  const mealsData = await mealsRequest.json();
+
+  macrosData.forEach((meal) => {
+    caloriesData.push({y: meal.calories, label: meal.meal_name});
+    servingData.push({y: meal.serving_size, label: meal.meal_name});
+    cholData.push({y: meal.cholesterol, label: meal.meal_name });
+    sodiumData.push({y: meal.sodium, label: meal.meal_name });
+    carbsData.push({y: meal.carbs, label: meal.meal_name});
+    proteinData.push({y: meal.protein, label: meal.meal_name});
+    fatData.push({y: meal.fat, label: meal.meal_name});
+  });
 
   const chart = new CanvasJS.Chart('chartContainer', {
     animationEnabled: true,
     title: {
       text: 'Macros for Ten Meals'
     },
-    axisX: {
-      valueFormatString: 'DDD'
-    },
     axisY: {
-      prefix: ''
+      interval: 10
     },
     toolTip: {
       shared: true
@@ -41,81 +54,31 @@ async function windowActions() {
         type: 'stackedBar',
         name: 'Calories',
         showInLegend: 'true',
-        xValueFormatString: '',
-        yValueFormatString: '$#,##0',
-        dataPoints: [
-          { x: new Date(2017, 0, 30), y: 56 },
-          { x: new Date(2017, 0, 31), y: 45 },
-          { x: new Date(2017, 1, 1), y: 71 },
-          { x: new Date(2017, 1, 2), y: 41 },
-          { x: new Date(2017, 1, 3), y: 60 },
-          { x: new Date(2017, 1, 4), y: 75 },
-          { x: new Date(2017, 1, 5), y: 98 }
-        ]
+        dataPoints: [caloriesData]
       },
       {
         type: 'stackedBar',
         name: 'Snacks',
         showInLegend: 'true',
-        xValueFormatString: 'DD, MMM',
-        yValueFormatString: '$#,##0',
-        dataPoints: [
-          { x: new Date(2017, 0, 30), y: 86 },
-          { x: new Date(2017, 0, 31), y: 95 },
-          { x: new Date(2017, 1, 1), y: 71 },
-          { x: new Date(2017, 1, 2), y: 58 },
-          { x: new Date(2017, 1, 3), y: 60 },
-          { x: new Date(2017, 1, 4), y: 65 },
-          { x: new Date(2017, 1, 5), y: 89 }
-        ]
+        dataPoints: [servingData]
       },
       {
         type: 'stackedBar',
         name: 'Drinks',
         showInLegend: 'true',
-        xValueFormatString: 'DD, MMM',
-        yValueFormatString: '$#,##0',
-        dataPoints: [
-          { x: new Date(2017, 0, 30), y: 48 },
-          { x: new Date(2017, 0, 31), y: 45 },
-          { x: new Date(2017, 1, 1), y: 41 },
-          { x: new Date(2017, 1, 2), y: 55 },
-          { x: new Date(2017, 1, 3), y: 80 },
-          { x: new Date(2017, 1, 4), y: 85 },
-          { x: new Date(2017, 1, 5), y: 83 }
-        ]
+        dataPoints: [cholData]
       },
       {
         type: 'stackedBar',
         name: 'Dessert',
         showInLegend: 'true',
-        xValueFormatString: 'DD, MMM',
-        yValueFormatString: '$#,##0',
-        dataPoints: [
-          { x: new Date(2017, 0, 30), y: 61 },
-          { x: new Date(2017, 0, 31), y: 55 },
-          { x: new Date(2017, 1, 1), y: 61 },
-          { x: new Date(2017, 1, 2), y: 75 },
-          { x: new Date(2017, 1, 3), y: 80 },
-          { x: new Date(2017, 1, 4), y: 85 },
-          { x: new Date(2017, 1, 5), y: 105 }
-        ]
+        dataPoints: [sodiumData]
       },
       {
         type: 'stackedBar',
         name: 'Takeaway',
         showInLegend: 'true',
-        xValueFormatString: 'DD, MMM',
-        yValueFormatString: '$#,##0',
-        dataPoints: [
-          { x: new Date(2017, 0, 30), y: 52 },
-          { x: new Date(2017, 0, 31), y: 55 },
-          { x: new Date(2017, 1, 1), y: 20 },
-          { x: new Date(2017, 1, 2), y: 35 },
-          { x: new Date(2017, 1, 3), y: 30 },
-          { x: new Date(2017, 1, 4), y: 45 },
-          { x: new Date(2017, 1, 5), y: 25 }
-        ]
+        dataPoints: [carbsData]
       }
     ]
   });
