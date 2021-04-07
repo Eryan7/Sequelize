@@ -23,23 +23,10 @@ async function windowActions() {
   const macrosRequest = await fetch('api/mealmacros');
   const macrosData = await macrosRequest.json();
 
-  macrosData.forEach((meal) => {
-    caloriesData.push({y: meal.calories, label: meal.meal_name});
-    servingData.push({y: meal.serving_size, label: meal.meal_name});
-    cholData.push({y: meal.cholesterol, label: meal.meal_name });
-    sodiumData.push({y: meal.sodium, label: meal.meal_name });
-    carbsData.push({y: meal.carbs, label: meal.meal_name});
-    proteinData.push({y: meal.protein, label: meal.meal_name});
-    fatData.push({y: meal.fat, label: meal.meal_name});
-  });
-
   const chart = new CanvasJS.Chart('chartContainer', {
     animationEnabled: true,
     title: {
       text: 'Macros for Ten Meals'
-    },
-    axisY: {
-      interval: 10
     },
     toolTip: {
       shared: true
@@ -54,33 +41,54 @@ async function windowActions() {
         type: 'stackedBar',
         name: 'Calories',
         showInLegend: 'true',
-        dataPoints: [caloriesData]
+        dataPoints: caloriesData
       },
       {
         type: 'stackedBar',
-        name: 'Snacks',
+        name: 'Serving Size',
         showInLegend: 'true',
-        dataPoints: [servingData]
+        dataPoints: servingData
       },
       {
         type: 'stackedBar',
-        name: 'Drinks',
+        name: 'Cholesterol',
         showInLegend: 'true',
-        dataPoints: [cholData]
+        dataPoints: cholData
       },
       {
         type: 'stackedBar',
-        name: 'Dessert',
+        name: 'Sodium',
         showInLegend: 'true',
-        dataPoints: [sodiumData]
+        dataPoints: sodiumData
       },
       {
         type: 'stackedBar',
-        name: 'Takeaway',
+        name: 'Carbs',
         showInLegend: 'true',
-        dataPoints: [carbsData]
+        dataPoints: carbsData
+      },
+      {
+        type: 'stackedBar',
+        name: 'Protein',
+        showInLegend: 'true',
+        dataPoints: proteinData
+      },
+      {
+        type: 'stackedBar',
+        name: 'Fat',
+        showInLegend: 'true',
+        dataPoints: fatData
       }
     ]
+  });
+  macrosData.forEach((meal) => {
+    caloriesData.push({label: meal.meal_name, y: meal.calories});
+    servingData.push({label: meal.meal_name, y: meal.serving_size});
+    cholData.push({label: meal.meal_name, y: meal.cholesterol});
+    sodiumData.push({label: meal.meal_name, y: meal.sodium});
+    carbsData.push({label: meal.meal_name, y: meal.carbs});
+    proteinData.push({label: meal.meal_name, y: meal.protein});
+    fatData.push({label: meal.meal_name, y: meal.fat});
   });
   chart.render();
 
