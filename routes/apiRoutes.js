@@ -6,6 +6,10 @@ import db from '../database/initializeDB.js';
 
 const router = express.Router();
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 /// /////////////////////////////////
 /// ////Dining Hall Endpoints////////
 /// /////////////////////////////////
@@ -16,7 +20,7 @@ router.get('/dining', async (req, res) => {
     res.json(reply);
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -30,7 +34,7 @@ router.get('/dining/:hall_id', async (req, res) => {
     res.json(hall);
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -44,7 +48,7 @@ router.post('/dining', async (req, res) => {
     res.json(newDining);
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -58,7 +62,7 @@ router.delete('/dining/:hall_id', async (req, res) => {
     res.send('Successfully Deleted');
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -78,7 +82,7 @@ router.put('/dining', async (req, res) => {
     res.send('Successfully Updated');
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -91,7 +95,7 @@ router.get('/meals', async (req, res) => {
     res.json(meals);
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -105,7 +109,7 @@ router.get('/meals/:meal_id', async (req, res) => {
     res.json(meals);
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -125,7 +129,7 @@ router.put('/meals', async (req, res) => {
     res.send('Meal Successfully Updated');
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -138,7 +142,7 @@ router.get('/macros', async (req, res) => {
     res.send(macros);
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -152,7 +156,7 @@ router.get('/macros/:meal_id', async (req, res) => {
     res.json(meals);
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -180,7 +184,7 @@ router.put('/macros', async (req, res) => {
     res.send('Successfully Updated');
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -193,7 +197,7 @@ router.get('/restrictions', async (req, res) => {
     res.json(restrictions);
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -207,7 +211,7 @@ router.get('/restrictions/:restriction_id', async (req, res) => {
     res.json(restrictions);
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
@@ -226,17 +230,26 @@ fat
 FROM
 Meals m
 INNER JOIN Macros ma 
-ON m.meal_id = ma.meal_id
-WHERE m.meal_id BETWEEN 1 AND 10;`;
+ON m.meal_id = ma.meal_id;`;
 router.get('/mealmacros', async (req, res) => {
   try {
     const result = await db.sequelizeDB.query(mealMacros, {
       type: sequelize.QueryTypes.SELECT
     });
-    res.json(result);
+    const filteredResults = [];
+    const filteredIDs = [];
+    while (filteredResults.length < 10) {
+      result.forEach((meal) => {
+        if (meal.meal_id === getRandomInt(45) && filteredIDs.includes(meal.meal_id) === false) {
+          filteredResults.push(meal);
+          filteredIDs.push(meal.meal_id);
+        }
+      });
+    }
+    res.json(filteredResults);
   } catch (err) {
     console.error(err);
-    res.error('Server error');
+    res.status(500).send(`${err.parent.code} ${err.parent.sqlMessage}`);
   }
 });
 
